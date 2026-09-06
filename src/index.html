@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090c10" />
+    <title>PulseBench</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to benchmarks</a>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="PulseBench home">
+          <img class="brand-mark" src="../assets/pulsebench-mark.svg" alt="" width="36" height="36" />
+          <div>
+            <p class="brand-name">PulseBench</p>
+            <p class="brand-subtitle">Windows performance lab</p>
+          </div>
+        </div>
+        <div class="privacy-note" title="Results stay on this PC">
+          <span class="privacy-dot" aria-hidden="true"></span>
+          Local only · no telemetry
+        </div>
+      </header>
+
+      <main id="main-content" class="main-content">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow">System benchmark</p>
+            <h1 id="hero-title">Measure the machine you actually use.</h1>
+            <p class="hero-description">
+              Repeatable CPU, GPU, memory, and storage workloads with live, comparable results.
+            </p>
+          </div>
+          <div class="hero-actions" aria-label="Benchmark actions">
+            <button id="run-all-button" class="button button-primary button-run-all" type="button">
+              <span class="button-icon" aria-hidden="true">▶</span>
+              Run all tests
+            </button>
+            <button id="stop-button" class="button button-danger" type="button" disabled>
+              <span aria-hidden="true">■</span>
+              Stop
+            </button>
+            <button id="export-button" class="button button-secondary" type="button" disabled>
+              <span aria-hidden="true">⇩</span>
+              Export
+            </button>
+          </div>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="panel benchmark-panel" aria-labelledby="benchmarks-title">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Performance suite</p>
+                <h2 id="benchmarks-title">Benchmarks</h2>
+              </div>
+              <span id="suite-status" class="status-badge" data-state="idle">
+                <span class="status-indicator" aria-hidden="true"></span>
+                <span id="suite-status-text">Ready</span>
+              </span>
+            </div>
+
+            <div id="component-grid" class="component-grid">
+              <article class="benchmark-card" data-component="cpu" data-state="idle">
+                <div class="card-heading">
+                  <div class="component-identity">
+                    <span class="component-icon" aria-hidden="true">CPU</span>
+                    <div>
+                      <h3>Processor</h3>
+                      <p>Single + all thread</p>
+                    </div>
+                  </div>
+                  <button class="button button-small component-run" type="button" data-run="cpu" aria-label="Run processor benchmark">Run</button>
+                </div>
+                <div class="metric-row">
+                  <strong id="cpu-primary" class="primary-metric">—</strong>
+                  <span id="cpu-unit" class="metric-unit">Mops/s</span>
+                </div>
+                <p id="cpu-detail" class="metric-detail">Waiting for a test</p>
+                <div class="progress-track" role="progressbar" aria-label="Processor benchmark progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span id="cpu-progress" class="progress-fill"></span>
+                </div>
+              </article>
+
+              <article class="benchmark-card" data-component="gpu" data-state="idle">
+                <div class="card-heading">
+                  <div class="component-identity">
+                    <span class="component-icon" aria-hidden="true">GPU</span>
+                    <div>
+                      <h3>Graphics</h3>
+                      <p>WebGL2 shader fill</p>
+                    </div>
+                  </div>
+                  <button class="button button-small component-run" type="button" data-run="gpu" aria-label="Run graphics benchmark">Run</button>
+                </div>
+                <div class="metric-row">
+                  <strong id="gpu-primary" class="primary-metric">—</strong>
+                  <span class="metric-unit">Gpixel/s</span>
+                </div>
+                <p id="gpu-detail" class="metric-detail">Waiting for a test</p>
+                <div class="progress-track" role="progressbar" aria-label="Graphics benchmark progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span id="gpu-progress" class="progress-fill"></span>
+                </div>
+              </article>
+
+              <article class="benchmark-card" data-component="memory" data-state="idle">
+                <div class="card-heading">
+                  <div class="component-identity">
+                    <span class="component-icon" aria-hidden="true">RAM</span>
+                    <div>
+                      <h3>Memory</h3>
+                      <p>Sustained copy rate</p>
+                    </div>
+                  </div>
+                  <button class="button button-small component-run" type="button" data-run="memory" aria-label="Run memory benchmark">Run</button>
+                </div>
+                <div class="metric-row">
+                  <strong id="memory-primary" class="primary-metric">—</strong>
+                  <span class="metric-unit">GiB/s</span>
+                </div>
+                <p id="memory-detail" class="metric-detail">Waiting for a test</p>
+                <div class="progress-track" role="progressbar" aria-label="Memory benchmark progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span id="memory-progress" class="progress-fill"></span>
+                </div>
+              </article>
+
+              <article class="benchmark-card" data-component="storage" data-state="idle">
+                <div class="card-heading">
+                  <div class="component-identity">
+                    <span class="component-icon" aria-hidden="true">SSD</span>
+                    <div>
+                      <h3>Storage</h3>
+                      <p>Sequential read + write</p>
+                    </div>
+                  </div>
+                  <button class="button button-small component-run" type="button" data-run="storage" aria-label="Run storage benchmark">Run</button>
+                </div>
+                <div class="metric-row">
+                  <strong id="storage-primary" class="primary-metric">—</strong>
+                  <span class="metric-unit">MiB/s write</span>
+                </div>
+                <p id="storage-detail" class="metric-detail">Waiting for a test</p>
+                <div class="progress-track" role="progressbar" aria-label="Storage benchmark progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span id="storage-progress" class="progress-fill"></span>
+                </div>
+              </article>
+            </div>
+
+            <div class="activity-strip">
+              <div class="activity-copy">
+                <span id="activity-icon" class="activity-icon" aria-hidden="true">✓</span>
+                <div>
+                  <p id="activity-title" class="activity-title">Ready to benchmark</p>
+                  <p id="activity-message" class="activity-message" aria-live="polite">Close heavy apps for the cleanest comparison.</p>
+                </div>
+              </div>
+              <div class="suite-progress-wrap">
+                <span id="suite-progress-label">0%</span>
+                <div id="suite-progress-track" class="progress-track progress-track-wide" role="progressbar" aria-label="Overall benchmark progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span id="suite-progress" class="progress-fill"></span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="sidebar" aria-label="System and history">
+            <section class="panel visual-panel" aria-labelledby="gpu-preview-title">
+              <div class="visual-copy">
+                <div>
+                  <p class="section-kicker">Live workload</p>
+                  <h2 id="gpu-preview-title">GPU preview</h2>
+                </div>
+                <span id="gpu-preview-state" class="preview-state">Idle</span>
+              </div>
+              <canvas
+                id="gpu-canvas"
+                class="gpu-canvas"
+                width="1920"
+                height="1080"
+                role="img"
+                aria-label="Animated preview of the WebGL2 shader used by the graphics benchmark"
+              ></canvas>
+              <p id="gpu-renderer" class="renderer-label">Detecting graphics adapter…</p>
+            </section>
+
+            <section class="panel system-panel" aria-labelledby="system-title">
+              <div class="section-heading compact-heading">
+                <div>
+                  <p class="section-kicker">This PC</p>
+                  <h2 id="system-title">System details</h2>
+                </div>
+                <button id="refresh-system-button" class="icon-button" type="button" aria-label="Refresh system details" title="Refresh system details">↻</button>
+              </div>
+              <dl class="system-list">
+                <div><dt>Processor</dt><dd id="system-cpu">Detecting…</dd></div>
+                <div><dt>Graphics</dt><dd id="system-gpu">Detecting…</dd></div>
+                <div><dt>Memory</dt><dd id="system-memory">Detecting…</dd></div>
+                <div><dt>Windows</dt><dd id="system-os">Detecting…</dd></div>
+              </dl>
+            </section>
+
+            <section class="panel history-panel" aria-labelledby="history-title">
+              <div class="section-heading compact-heading">
+                <div>
+                  <p class="section-kicker">Saved locally</p>
+                  <h2 id="history-title">Recent runs</h2>
+                </div>
+                <button id="clear-history-button" class="text-button" type="button" hidden>Clear</button>
+              </div>
+              <ol id="history-list" class="history-list">
+                <li class="empty-history">
+                  <span aria-hidden="true">↗</span>
+                  <p>Your five latest completed runs will appear here.</p>
+                </li>
+              </ol>
+            </section>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <span>Results vary with temperature, power mode, and background activity.</span>
+        <span id="runtime-label">Initializing benchmark engine…</span>
+      </footer>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+    <script src="./renderer.js" defer></script>
+  </body>
+</html>

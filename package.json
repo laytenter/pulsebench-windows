@@ -1,0 +1,58 @@
+{
+  "name": "pulsebench",
+  "version": "1.0.0",
+  "description": "A local-first Windows benchmark for CPU, GPU, memory and storage.",
+  "main": "dist/src/main.js",
+  "author": "laytenter",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laytenter/pulsebench-windows.git"
+  },
+  "homepage": "https://github.com/laytenter/pulsebench-windows#readme",
+  "bugs": {
+    "url": "https://github.com/laytenter/pulsebench-windows/issues"
+  },
+  "scripts": {
+    "clean": "node scripts/clean.js",
+    "build": "npm run clean && tsc -p tsconfig.json && node scripts/copy-static.js",
+    "start": "npm run build && electron .",
+    "smoke": "npm run build && electron . --smoke-test",
+    "smoke:suite": "npm run build && electron . --suite-smoke-test",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "pack:win": "npm run build && electron-builder --win dir",
+    "dist:win": "npm run build && electron-builder --win portable"
+  },
+  "build": {
+    "appId": "dev.pulsebench.windows",
+    "productName": "PulseBench",
+    "artifactName": "PulseBench-${version}-Windows-${arch}.${ext}",
+    "asarUnpack": [
+      "dist/src/benchmark-worker.js",
+      "dist/src/types.js"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "electron": "^44.2.0",
+    "electron-builder": "^26.0.0",
+    "typescript": "^5.9.0"
+  }
+}
