@@ -105,7 +105,7 @@ function memoryLoop(
   flag: Int32Array,
   onProgress?: (elapsedMs: number) => void,
   progressIntervalMs = 100,
-): 
+):
   | { bytesCopied: number; checksum: number; copyCount: number; elapsedMs: number }
   | undefined {
   if (isCancelled(flag)) {
